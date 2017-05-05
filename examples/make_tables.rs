@@ -35,11 +35,12 @@ fn main() {
 }
 
 fn print_encode_table(alphabet: &[u8], const_name: &str, indent_depth: usize) {
-    println!("{:width$}pub const {}: &'static [u8; 64] = &[", "", const_name, width=indent_depth);
+    println!("{:width$}pub const {}: &'static [char; 64] = &[", "", const_name, width=indent_depth);
 
     for (i, b) in alphabet.iter().enumerate() {
-        println!("{:width$}{}, // input {} (0x{:X}) => '{}' (0x{:X})", "",
-                 b, i, i, String::from_utf8(vec!(*b as u8)).unwrap(), b, width=indent_depth + 4);
+        let s = String::from_utf8(vec!(*b as u8)).unwrap();
+        println!("{:width$}'{}', // input {} (0x{:X}) => '{}' (0x{:X})", "",
+                 s, i, i, s, b, width=indent_depth + 4);
     }
 
     println!("{:width$}];", "", width=indent_depth);
